@@ -2,7 +2,7 @@
 
 : ${REPO_PATH:="$PWD"}
 : ${REPO_NAME:=$(basename "$REPO_PATH")}
-: ${BACKUP_FILENAME:="$HOME/Dropbox/Documents/$REPO_NAME.git.tar.gz.gpg"}
+: ${BACKUP_FILENAME:="$HOME/Dropbox/$REPO_NAME.git.tar.gz.gpg"}
 
 TMP_DIR=$(mktemp -d -t git-backup.XXX)
 trap "rm -rf \"$TMP_DIR\"" EXIT

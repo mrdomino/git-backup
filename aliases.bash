@@ -2,7 +2,7 @@
 
 writingme() {
   tmpdir=$(mktemp -d -t writing.XXX)
-  gpg -d "$HOME/Dropbox/Documents/writing.git.tar.gz.gpg" |
+  gpg -d "$HOME/Dropbox/writing.git.tar.gz.gpg" |
     tar xz -C "$tmpdir"
   git clone -- "$tmpdir/writing.git" "$tmpdir/writing"
   pushd "$tmpdir/writing"
