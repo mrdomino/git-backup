@@ -13,7 +13,7 @@
     
     git commit -am 'scribbles and squiggles'
     
-    git backup   # write an updated writing.git.tar.gz to Dropbox
+    git backup   # write an updated writing.git.tar.gz.gpg to Dropbox
     
     unwritingme  # popd
                  # rmdir /tmp/writing.adf
