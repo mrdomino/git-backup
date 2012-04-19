@@ -19,6 +19,8 @@ function clean-bare-repo() {
     git config --unset core.filemode &&
     git remote rm origin &&
     git --bare gc --quiet &&
+    git --bare repack -adq &&
+    git --bare prune-packed --quiet &&
     git --bare pack-refs --all --prune &&
     { rm info/refs
       rmdir info
@@ -27,12 +29,25 @@ function clean-bare-repo() {
       rmdir refs/heads
       rmdir refs/tags
       rmdir rr-cache
+      true
     } 2>/dev/null
-  )
+  ) ||
+    { echo 'Failed to clean bare repo.' >&2
+      return 1
+    }
 }
 
 function verify-bare-repo() {
-  git clone --quiet -- "$REPO_PATH" "$TMP_DIR/clone"
+  { git clone --quiet -- "$TMP_DIR/$REPO_NAME.git" "$TMP_DIR/clone" &&
+    ( cd "$TMP_DIR/$REPO_NAME.git" &&
+      { echo -n "Backing up $REPO_NAME at "
+        git log --oneline HEAD^..HEAD
+      }
+    )
+  } ||
+    { echo "Failed to clone $REPO_NAME.git." >&2
+      return 1
+    }
 }
 
 function encrypt-to() {
@@ -53,6 +68,4 @@ clone-to-bare-repo &&
   clean-bare-repo &&
   verify-bare-repo &&
   create-encrypted-backup &&
-  { echo "Backed up $REPO_NAME:"
-    ls -l -- "$BACKUP_FILENAME"
-  }
+  ls -l -- "$BACKUP_FILENAME"
