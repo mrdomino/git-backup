@@ -1,0 +1,10 @@
+#!/bin/bash
+
+basename=$(basename "$PWD")
+[[ writing == "$basename" ]] ||
+  { echo "$basename is not writing!" >&2
+    return 1
+  }
+tmpdir=$(dirname "$PWD")
+popd &&
+  rm -rf "$tmpdir"
