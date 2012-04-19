@@ -1,7 +1,6 @@
 ## Installation
 
-    cp git-backup $HOME/bin
-    cat aliases.bash >> $HOME/.bashrc
+    ./install.sh
 
 ## Example Usage
 
