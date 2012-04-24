@@ -40,9 +40,8 @@ function clean-bare-repo() {
 function verify-bare-repo() {
   { git clone --quiet -- "$TMP_DIR/$REPO_NAME.git" "$TMP_DIR/clone" &&
     ( cd "$TMP_DIR/$REPO_NAME.git" &&
-      { echo -n "Backing up $REPO_NAME at "
-        git log --oneline HEAD^..HEAD
-      }
+      git log --pretty=format:"Backing up $REPO_NAME at %h (%s) from %cr:" \
+          HEAD^..
     )
   } ||
     { echo "Failed to clone $REPO_NAME.git." >&2
