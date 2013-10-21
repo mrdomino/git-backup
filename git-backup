@@ -54,7 +54,7 @@ function encrypt-to() {
   filename="$1"
 
   tmpfile="$TMP_DIR/gpg-out"
-  gpg --encrypt --symmetric - > "$tmpfile" &&
+  gpg --symmetric - > "$tmpfile" &&
     mv -- "$tmpfile" "$filename"
 }
 

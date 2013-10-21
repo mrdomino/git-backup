@@ -9,17 +9,23 @@ This is like
 encrypts all at once rather than every commit. This results in drastically
 smaller file sizes since it doesn't break git's delta algorithm. It's also
 slightly less integrated: you need to run an extra command, and it's stubbornly
-unconfigurable. Sorry.
+unconfigurable.
 
 ## Requirements
 
 `gpg` should be on your path. `/bin/bash` should be sane.
 
+`tar` should be on your path and should accept arguments like GNU tar does.
+
+This should go without saying, but you also need `git`.
+
+If your system is slightly off from this, you might be able to get it working
+without much hassle. Send me a pull request.
+
 ## Usage
 
 Run `git backup` within a repository to store an encrypted copy to Dropbox.
 
-    git init myprivaterepo
     cd myprivaterepo
     git backup
 
@@ -39,8 +45,17 @@ current working dir.
 
 ## Configuration
 
-Edit `git-backup`. It's pretty readable. You can probably do it even if you've
-never written a shell script.
+Edit `git-backup` and `git-restore`. They're pretty readable. You can probably
+do it even if you've never written a shell script.
+
+Alternatively, set some environment variables:
+
+- `BACKUP_DIR` to the base directory where you want to store backups,
+- `REPO_NAME` to the name of the repo you want to back up,
+- `REPO_PATH` to the directory containing your repo,
+- and `BACKUP_FILENAME` to the full actual backup filename,
+
+listed in order of your likelihood of wanting to touch them.
 
 ## See also
 
