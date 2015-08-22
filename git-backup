@@ -5,7 +5,7 @@
 : ${BACKUP_DIR:="$HOME/Dropbox"}
 : ${BACKUP_FILENAME:="$BACKUP_DIR/$REPO_NAME.git.tar.gz.gpg"}
 
-TMP_DIR=$(mktemp -d -t git-backup.XXX)
+TMP_DIR=$(mktemp -d -t git-backup.XXXXXX)
 trap "rm -rf \"$TMP_DIR\"" EXIT
 
 
@@ -59,7 +59,7 @@ function encrypt-to() {
 }
 
 function create-encrypted-backup() {
-  tar -C "$TMP_DIR" -cz -- "$REPO_NAME.git" |
+  tar -czf - -C "$TMP_DIR" -- "$REPO_NAME.git" |
     encrypt-to "$BACKUP_FILENAME"
 }
 
